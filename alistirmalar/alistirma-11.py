@@ -13,6 +13,9 @@ class Insan(object):
     def __str__(self):
         return "%s %s" % (self.isim, self.soy_isim)
 
+    def __repr__(self):
+        return "%s %s" % (self.isim, self.soy_isim)
+
     def mesajlari_goster(self):
         for mesaj in self.mesaj_kutusu:
             print '-------------------------------'
@@ -40,6 +43,9 @@ class Ogretmen(Insan):
         self.verdigi_ders = verdigi_ders
 
     def ders_birak(self, ogrenci):
+        if not isinstance(ogrenci, Ogrenci):
+            print "Lutfen ogrenci birakin!"
+            return
         ogrenci.kaldigi_dersler.append(self.verdigi_ders)
 
         telgraf = Telgraf(self, ogrenci.veli,
@@ -49,6 +55,9 @@ class Ogretmen(Insan):
         telgraf.gonder()
 
     def ders_gecir(self, ogrenci):
+        if not isinstance(ogrenci, Ogrenci):
+            print "Lutfen ogrenci gecirin!"
+            return
         ogrenci.gectigi_dersler.append(self.verdigi_ders)
 
 
@@ -75,10 +84,28 @@ turgut_hoca = Ogretmen("turgut", "hoca", 190, 70, 10, "Fizik")
 kamil_hoca = Ogretmen("kamil", "hoca", 190, 70, 10, "Matematik")
 
 mahmut_hoca.ders_gecir(ayse)
-riza_hoca.ders_birak(ayse)
+riza_hoca.ders_birak("ayse")
 turgut_hoca.ders_birak(ayse)
 kamil_hoca.ders_birak(ayse)
 
-ayse.egitim_bas()
+#ayse.egitim_bas()
 
-aysenin_babasi.mesajlari_goster()
+#aysenin_babasi.mesajlari_goster()
+
+bisiler = [ali, ayse, alinin_babasi, aysenin_babasi, mahmut_hoca,
+            riza_hoca, turgut_hoca, kamil_hoca, 1, 2, "ahmet"]
+
+ogrenciler = []
+ogretmenler = []
+
+for bisi in bisiler:
+    if isinstance(bisi, Ogrenci):
+        ogrenciler.append(bisi)
+    if isinstance(bisi, Ogretmen):
+        ogretmenler.append(bisi)
+
+print ogrenciler
+print ogretmenler
+
+print issubclass(Ogretmen, Insan)
+print issubclass(Telgraf, Insan)
