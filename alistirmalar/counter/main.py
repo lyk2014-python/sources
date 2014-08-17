@@ -1,10 +1,13 @@
-from readers import read_from_file
+import sys
+
+from readers import read_from_url
 from counter import count_words
 from printer import print_histogram
 
-FILE_PATH = "data.txt"
+if len(sys.argv) > 1:
+    text = read_from_url(sys.argv[1])
+    words = count_words(text)
 
-text = read_from_file(FILE_PATH)
-words = count_words(text)
-
-print_histogram(words)
+    print_histogram(words)
+else:
+    print "Kullanim: python main.py <url>"

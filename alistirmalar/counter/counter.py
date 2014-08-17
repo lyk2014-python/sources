@@ -4,7 +4,8 @@ def sorted_words(result):
                   reverse=True)
 
 def count_words(text):
-    words = text.split()
+    words = [word for word in text.split()
+             if len(word) > 4]
     result = {}
 
     for word in words:
